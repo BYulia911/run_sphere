@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+</head>
+<body>
+    <h1>Добро пожаловать, {{ user.username }}!</h1>
+    <img src="{{ url_for('static', filename='uploads/' + user.avatar) }}" alt="Аватар" width="100" height="100">
+    <p>Email: {{ user.email }}</p>
+    <p>Рост: {{ user.height }} см</p>
+    <p>Вес: {{ user.weight }} кг</p>
+    <p>Возраст: {{ user.age }} лет</p>
+    <p>Пол: {{ user.gender }}</p>
+    <form action="{{ url_for('delete_profile') }}" method="POST">
+        <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить свой профиль?');">Удалить профиль</button>
+    </form>
+    <a href="{{ url_for('logout') }}">Выйти</a>
+</body>
+</html>
