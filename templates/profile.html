@@ -11,10 +11,19 @@
     <p>Рост: {{ user.height }} см</p>
     <p>Вес: {{ user.weight }} кг</p>
     <p>Возраст: {{ user.age }} лет</p>
-    <p>Пол: {{ user.gender }}</p>
+    <p>Пол:
+        {% if user.gender == 'male' %}
+            Мужской
+        {% elif user.gender == 'female' %}
+            Женский
+        {% else %}
+            Другой
+        {% endif %}
+        </p>
     <form action="{{ url_for('delete_profile') }}" method="POST">
         <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить свой профиль?');">Удалить профиль</button>
     </form>
+    <a href="{{ url_for('edit_profile', user_id=user.id) }}">Изменить данные</a>
     <a href="{{ url_for('logout') }}">Выйти</a>
 </body>
 </html>

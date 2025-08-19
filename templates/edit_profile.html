@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактирование профиля</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
+</head>
+<body>
+    <h1>Редактирование профиля</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="username" placeholder="Имя пользователя" value="{{ user.username }}" required>
+        <input type="email" name="email" placeholder="Email" value="{{ user.email }}" required>
+        <input type="password" name="password" placeholder="Пароль">
+        <input type="number" name="height" placeholder="Рост (см)" value="{{ user.height | int }}" required>
+        <input type="number" name="weight" step="0.1" placeholder="Вес (кг)" value="{{ user.weight }}" required>
+        <input type="number" name="age" placeholder="Возраст" value="{{ user.age }}" required>
+        <select name="gender" required>
+            <option value="">Выберите пол</option>
+            <option value="male" {% if user.gender == 'male' %}selected{% endif %}>Мужской</option>
+            <option value="female" {% if user.gender == 'female' %}selected{% endif %}>Женский</option>
+            <option value="other" {% if user.gender == 'other' %}selected{% endif %}>Другой</option>
+        </select>
+        <input type="file" name="avatar">
+        <button type="submit">Сохранить изменения</button>
+    </form>
+    <a href="{{ url_for('profile', user_id=user.id) }}">Назад</a>
+</body>
+</html>
