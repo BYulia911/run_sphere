@@ -1,13 +1,17 @@
 from flask import Blueprint, request, jsonify, render_template, redirect, url_for, flash, session, current_app
 from werkzeug.utils import secure_filename
-from flask_sqlalchemy import SQLAlchemy
-from dotenv import load_dotenv
 import bcrypt
 import os
-from models import User  # Импортируйте модель User
-from app import db
+
+# Импортируйте db из db.py
+from db import db  
+from models import User  # Импортируйте User после db
 
 auth = Blueprint('auth', __name__)
+
+@auth.route('/')
+def home():
+    return render_template('index.html')
 
 # Регистрация
 @auth.route('/register', methods=['GET', 'POST'])
@@ -62,13 +66,13 @@ def login():
         user = User.query.filter_by(username=username).first()
         if not user:
             flash("Пользователь не найден")
-            return redirect(url_for('home'))
+            return redirect(url_for('auth.home'))
 
         if bcrypt.checkpw(password.encode('utf-8'), user.password):
             session['user_id'] = user.id
             session['username'] = user.username
             flash("Успешный вход")
-            return redirect(url_for('profile'))
+            return redirect(url_for('profile.profile_view'))
 
         else:
             flash("Неверный пароль")
@@ -81,4 +85,4 @@ def login():
 def logout():
     session.clear()
     flash("Вы вышли из системы.")
-    return redirect(url_for('home'))
+    return redirect(url_for('auth.home'))

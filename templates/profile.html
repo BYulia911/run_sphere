@@ -20,10 +20,10 @@
             Другой
         {% endif %}
         </p>
-    <form action="{{ url_for('delete_profile') }}" method="POST">
+    <form action="{{ url_for('profile.delete_profile') }}" method="POST">
         <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить свой профиль?');">Удалить профиль</button>
     </form>
-    <a href="{{ url_for('edit_profile', user_id=user.id) }}">Изменить данные</a>
-    <a href="{{ url_for('logout') }}">Выйти</a>
+    <a href="{{ url_for('profile.edit_profile', user_id=user.id) }}">Изменить данные</a>
+    <a href="{{ url_for('auth.logout') }}">Выйти</a>
 </body>
 </html>

@@ -1,4 +1,4 @@
-from app import db
+from db import db  # Импортируйте db из нового файла
 from datetime import datetime
 
 class User(db.Model):
@@ -11,8 +11,6 @@ class User(db.Model):
     age = db.Column(db.Integer, nullable=False)
     gender = db.Column(db.String(10), nullable=False)
     avatar = db.Column(db.String(120), default='default.png')
-    # reset_token = db.Column(db.String(256), nullable=True)
-
 
 class WeightTracking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
