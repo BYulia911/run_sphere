@@ -1,4 +1,7 @@
-html, body {
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+html,
+body {
     height: 100%;
     margin: 0;
 }
@@ -6,45 +9,100 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    align-items: center;
+    background-color: #b7f0b6;
+}
+
+body,
+input,
+button,
+select {
+    font-family: 'Raleway', sans-serif;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    align-items: center;
+    gap: 12px;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    border-radius: 15px;
+    background-color: white;
 }
 
-label {
-    margin-bottom: 5px;
+h2 {
+    margin: 5px;
 }
 
 input {
-    margin-bottom: 15px;
-    padding: 10px;
+    height: 50px;
+    width: 300px;
     font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding-left: 10px;
+    border: gray 1px solid;
+}
+
+input,
+button {
+    border-radius: 5px;
+}
+
+select {
+    height: 54px;
+    width: 314px;
+    font-size: 16px;
+    padding-left: 7px;
+    border: gray 1px solid;
+    border-radius: 5px;
+}
+
+select option {
+    color: black;
+}
+
+input[type=file] {
+    height: 50px;
+    width: 302px;
+    max-width: 100%;
+    text-align: center;
+    padding: 0;
+}
+
+input[type="file"]::file-selector-button {
+    height: 30px;
+    width: 150px;
+    background-color: #037f01;
+    color: white;
+    border: 0;
+    border-radius: 5px;
 }
 
 button {
-    padding: 10px;
-    font-size: 16px;
-    background-color: #007bff;
+    height: 55px;
+    width: 315px;
+    border: 0px;
     color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    font-size: 16px;
+    background-color: #05ba02;
 }
 
-button:hover {
-    background-color: #0056b3;
+a {
+    color: black;
+    font-size: 18px;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    color: #037f01;
+}
+
+p,
+p a {
+    margin-top: 15px;
+    font-size: 18px;
 }

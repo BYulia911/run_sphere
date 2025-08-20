@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Регистрация</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='register.css') }}">
 </head>
+
 <body>
     <form method="POST">
-    <input type="text" name="username" placeholder="Имя пользователя" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="password" name="password" placeholder="Пароль" required>
-    <input type="number" name="height" placeholder="Рост (см)" required>
-    <input type="number" name="weight" step="0.1" placeholder="Вес (кг)" required>
-    <input type="number" name="age" placeholder="Возраст" required>
-    <select name="gender" required>
-        <option value="">Выберите пол</option>
-        <option value="male">Мужской</option>
-        <option value="female">Женский</option>
-        <option value="other">Другой</option>
-    </select>
-    <input type="file" name="avatar">
-    <button type="submit">Зарегистрироваться</button>
-</form>
-    <a href="/">Назад</a>
+        <h2>Регистрация</h2>
+        <input type="text" name="username" placeholder="Имя пользователя" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Пароль" required>
+        <input type="number" name="height" placeholder="Рост (см)" required>
+        <input type="number" name="weight" step="0.1" placeholder="Вес (кг)" required>
+        <input type="number" name="age" placeholder="Возраст" required>
+        <select name="gender" required>
+            <option value="" disabled selected style="color: gray;">Выберите пол</option>
+            <option value="male">Мужской</option>
+            <option value="female">Женский</option>
+            <option value="other">Другой</option>
+        </select>
+        <input type="file" name="avatar">
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+    <p>Есть аккаунт? <a href="/login">Войти</a></p>
 </body>
 </html>
