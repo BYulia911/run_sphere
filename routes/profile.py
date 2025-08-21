@@ -2,6 +2,7 @@ from flask import Blueprint, Response, request, render_template, redirect, url_f
 from werkzeug.utils import secure_filename
 import matplotlib.pyplot as plt
 from models import User, WeightTracking
+from datetime import datetime
 import bcrypt
 import base64
 import os
@@ -17,7 +18,6 @@ def profile_view():
     if not user_id:
         flash("Пожалуйста, войдите в систему.")
         return redirect(url_for('auth.login'))
-
     user = User.query.get(user_id)
     return render_template('profile.html', user=user)
 
@@ -44,23 +44,14 @@ def edit_profile(user_id):
             user.weight = new_weight
             new_weight_entry = WeightTracking(user_id=user.id, weight=new_weight)
             db.session.add(new_weight_entry)
-        user.age = int(request.form['age'])
+        user.date_of_birth = datetime.strptime(request.form['date_of_birth'], '%Y-%m-%d').date()
         user.gender = request.form['gender']
 
-        if user.gender == 'male':
-            user.avatar = 'male.png'
-        elif user.gender == 'female':
-            user.avatar = 'female.png'
-        else:
-            user.avatar = 'default.png'
-        
         if 'avatar' in request.files:
             avatar_file = request.files['avatar']
             if avatar_file and allowed_file(avatar_file.filename):
-                filename = secure_filename(avatar_file.filename)
-                avatar_file.save(os.path.join('static/avatars', filename))
-                user.avatar = f'avatars/{filename}'
-
+                avatar_data = avatar_file.read()
+                user.avatar = avatar_data
         try:
             db.session.commit()
             flash('Данные профиля успешно обновлены.')
@@ -68,15 +59,19 @@ def edit_profile(user_id):
             db.session.rollback()
             print(f'Error during commit: {str(e)}')
             flash(f'Произошла ошибка при обновлении данных: {str(e)}')
-
-
         return redirect(url_for('profile.profile_view'))
-
     return render_template('edit_profile.html', user=user)
 
 def allowed_file(filename):
     allowed_extensions = {'png', 'jpg', 'jpeg', 'gif'}
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in allowed_extensions
+
+@profile.route('/avatar/<int:user_id>')
+def get_avatar(user_id):
+    user = User.query.get(user_id)
+    if user and user.avatar:
+        return Response(user.avatar, mimetype='image/png')  # Укажите правильный тип изображения
+    return '', 404
 
 @profile.route('/weight_trend/<int:user_id>', methods=['GET'])
 def weight_trend(user_id):

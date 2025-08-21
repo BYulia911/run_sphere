@@ -6,11 +6,11 @@
 </head>
 <body>
     <h1>Добро пожаловать, {{ user.username }}!</h1>
-    <img src="{{ url_for('static', filename='uploads/' + user.avatar) }}" alt="Аватар" width="100" height="100">
+    <img src="{{ url_for('profile.get_avatar', user_id=user.id) }}" height="100" width="100" alt="Avatar">
     <p>Email: {{ user.email }}</p>
     <p>Рост: {{ user.height }} см</p>
     <p>Вес: {{ user.weight }} кг</p>
-    <p>Возраст: {{ user.age }} лет</p>
+    <p>Дата рождения: {{ user.date_of_birth.strftime('%d.%m.%Y') }}</p>
     <p>Пол:
         {% if user.gender == 'male' %}
             Мужской

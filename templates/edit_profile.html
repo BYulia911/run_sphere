@@ -14,7 +14,7 @@
         <input type="password" name="password" placeholder="Пароль">
         <input type="number" name="height" placeholder="Рост (см)" value="{{ user.height | int }}" required>
         <input type="number" name="weight" step="0.1" placeholder="Вес (кг)" value="{{ user.weight }}" required>
-        <input type="number" name="age" placeholder="Возраст" value="{{ user.age }}" required>
+        <input type="date" name="date_of_birth" value="{{ user.date_of_birth.strftime('%Y-%m-%d') }}" required>
         <select name="gender" required>
             <option value="">Выберите пол</option>
             <option value="male" {% if user.gender == 'male' %}selected{% endif %}>Мужской</option>

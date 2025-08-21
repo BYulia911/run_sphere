@@ -2,10 +2,8 @@ from flask import Blueprint, request, jsonify, render_template, redirect, url_fo
 from werkzeug.utils import secure_filename
 import bcrypt
 import os
-
-# Импортируйте db из db.py
 from db import db  
-from models import User  # Импортируйте User после db
+from models import User
 
 auth = Blueprint('auth', __name__)
 
@@ -22,37 +20,38 @@ def register():
         password = request.form.get('password')
         height = request.form.get('height')
         weight = request.form.get('weight')
-        age = request.form.get('age')
+        date_of_birth = request.form.get('date_of_birth')
         gender = request.form.get('gender')
 
         avatar = request.files.get('avatar')
         avatar_filename = None
 
         if avatar:
-            avatar_filename = secure_filename(avatar.filename)
-            avatar.save(os.path.join(current_app.config['UPLOAD_FOLDER'], avatar_filename))
+            avatar_data = avatar.read()
         else:
             if gender == 'male':
-                avatar_filename = 'male.png'
+                default_avatar_path = os.path.join('static', 'uploads', 'male.png')
             elif gender == 'female':
-                avatar_filename = 'female.png'
+                default_avatar_path = os.path.join('static', 'uploads', 'female.png')
             else:
-                avatar_filename = 'default.png'
+                default_avatar_path = os.path.join('static', 'uploads', 'default.png')
+            with open(default_avatar_path, 'rb') as f:
+                avatar_data = f.read()
 
         if (User.query.filter_by(username=username).first() or
             User.query.filter_by(email=email).first()):
             flash("Пользователь уже существует")
             return render_template('register.html', email=email, username=username)
 
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         new_user = User(username=username, email=email, password=hashed_password,
-                        height=height, weight=weight, age=age, gender=gender,
-                        avatar=avatar_filename)
+                        height=height, weight=weight, date_of_birth=date_of_birth, gender=gender,
+                        avatar=avatar_data)
         db.session.add(new_user)
         db.session.commit()
 
         flash("Пользователь зарегистрирован")
-        return redirect(url_for('home'))
+        return redirect(url_for('auth.home'))
 
     return render_template('register.html')
 
@@ -68,7 +67,7 @@ def login():
             flash("Пользователь не найден")
             return redirect(url_for('auth.home'))
 
-        if bcrypt.checkpw(password.encode('utf-8'), user.password):
+        if bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
             session['user_id'] = user.id
             session['username'] = user.username
             flash("Успешный вход")
