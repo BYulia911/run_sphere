@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+body, input, button {
+    font-family: 'Raleway', sans-serif;
+}
+
+body {
+    background-color: #b7f0b6;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: white;
+    width: fit-content;
+    border-radius: 15px;
+    margin-top: 20px;
+    gap: 100px;
+    padding: 30px;
+}
+
+.profile-info_left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+img {
+    height: 100px;
+    width: 100px;
+    border-radius: 57px;
+    padding: 6px;
+    border: black 2px solid
+}
+
+button {
+    height: 40px;
+    width: 170px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: gray;
+    text-decoration: none;
+    border: none;
+}
+
+.edit-button {
+    background-color: #8ff08d;
+}
+
+.exit-button {
+    border: #ff6161 2px solid;
+    color: #ff6161;
+    font-weight: 600;
+    background-color: white;
+}
+
+.delete-button {
+    height: 40px;
+    width: 170px;
+    text-decoration: none;
+    border: none;
+    background-color: #ff6161;
+}
